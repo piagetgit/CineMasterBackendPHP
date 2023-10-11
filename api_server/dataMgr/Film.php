@@ -13,7 +13,8 @@ class Film {
     public $regista;
     public $duration;
     public $title;
-
+	public $img;
+	
     // il construttore inizializza la variabile per la connessione al DB
     public function __construct($db) {
         $this->conn = $db;
