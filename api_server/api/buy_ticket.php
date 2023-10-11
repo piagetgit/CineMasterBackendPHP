@@ -6,6 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // dichiaro il metodo consentito per la request
 header("Access-Control-Allow-Methods: GET");
  
+
 // includo le classi per la gestione dei dati
 include_once '../dataMgr/Database.php';
 include_once '../dataMgr/Product.php';
