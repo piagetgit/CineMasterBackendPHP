@@ -13,7 +13,8 @@ class Film {
     public $regista;
     public $duration;
     public $title;
-
+	public $img;
+	
     // il construttore inizializza la variabile per la connessione al DB
     public function __construct($db) {
         $this->conn = $db;
@@ -40,6 +41,9 @@ class Film {
 	public function setDuration($duration_par) {
         $this->id = $duration_par;
     }
+	public function setImg($img_par) {
+        $this->id = $img_par;
+    }
 
     public function getTitle() {
         return $this->title;
@@ -61,6 +65,9 @@ class Film {
     }
 	public function getDuration(){
         return $this->duration;
+    }
+	public function getImg(){
+        return $this->img;
     }
 
 	// servizio di lettura di tutti i film
@@ -98,6 +105,7 @@ class Film {
 			$this->publish_date = $row['publish_date'];
 			$this->regista = $row['regista'];
 			$this->duration = $row['duration'];
+			$this->img=$row['img'];
 
 		}
 		else {
@@ -109,6 +117,7 @@ class Film {
 			$this->publish_date = null;
 			$this->regista = null;
 			$this->duration = null;
+			$this->img = null;
 		
 		// la funzione readOne non restituisce un risultato, bensì modifica l'oggetto su cui viene invocata (cioè il prodotto)
 	}
@@ -117,7 +126,7 @@ class Film {
 	function create() {
 		// inserisco il nuovo film
 		$query = "INSERT INTO films SET
-				  tilte=:title, prezzo=:price, descrizione=:description, category=:category, publish_date=:publish_date, regista=:regista, duration=:duration;";
+				  tilte=:title, prezzo=:price, descrizione=:description, category=:category, publish_date=:publish_date, regista=:regista, duration=:duration, img=:img;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query);
 
@@ -129,6 +138,8 @@ class Film {
 		$stmt->bindParam(":publish_date", $this->publish_date);
 		$stmt->bindParam(":regista", $this->regista);
 		$stmt->bindParam(":duration", $this->duration);
+		$stmt->bindParam(":duration", $this->duration);
+		$stmt->bindParam(":img", $this->img);
  
 		// eseguo la query
 		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
@@ -146,7 +157,8 @@ class Film {
 					category = :c_id,
 					publish_date = :n,
 					regista = :r,
-					duration = :duration
+					duration = :duration,
+					img = :img
 					WHERE
 					id = :i;";
 	
@@ -162,6 +174,7 @@ class Film {
 		$stmt->bindParam(":publish_date", $this->publish_date);
 		$stmt->bindParam(":r", $this->regista);
 		$stmt->bindParam(":duration", $this->duration);
+		$stmt->bindParam(":img", $this->img);
  
 		// eseguo la query
 		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
