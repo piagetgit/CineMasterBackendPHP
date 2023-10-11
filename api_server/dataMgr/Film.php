@@ -72,8 +72,8 @@ class Film {
 
 	// servizio di lettura di tutti i film
 	function read() {
-		// estraggo tutti i prodotti 
-		$query = "SELECT * FROM films  ORDER BY title;";
+		// estraggo tutti i film
+		$query = "SELECT * FROM films ORDER BY title;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
 		// eseguo la query
@@ -221,5 +221,6 @@ class Film {
 	
 		return $stmt;
 	}	
+}
 }
 ?>
