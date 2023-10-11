@@ -68,31 +68,12 @@ class User {
 	
 	function read() {
 		// estraggo tutti film 
-		$query = "SELECT * FROM user_table ORDER BY firstname;";
+		$query = "SELECT * FROM user ORDER BY firstname;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
 		// eseguo la query
 		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
 
-		return $stmt; 
-	}
-
-    function readUserByEmail() {
-		$query = "SELECT * FROM user_table
-                  WHERE user_table.email=:email;";
-		// preparo la query
-		$stmt = $this->conn->prepare($query); 
-        $stmt->bindParam(":email", $this->email);
-		// eseguo la query
-		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
-        $row = $stmt->fetch(PDO::FETCH_ASSOC); // la funzione fetch (libreria PDO) con parametro PDO::FETCH_ASSOC invocata su un PDOStatement, restituisce un record ($row), in particolare un array le cui chiavi sono i nomi delle colonne della tabella 
- 
-		if ($row) {
-			// inserisco i valori nelle variabili d'istanza 
-			$this->name = $row['name'];
-			$this->surname = $row['surname'];
-			$this->password = $row['password'];
-		}
 		return $stmt; 
 	}
 	
