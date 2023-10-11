@@ -93,8 +93,35 @@ class User {
 			$this->surname = $row['surname'];
 			$this->password = $row['password'];
 		}
-		return $stmt; 
+        else{
+            $arr = array('message' => 'User ' .$this->email. ' not found');
+            echo json_encode($arr);
+            http_response_code(404);
+        }
 	}
+
+    function createUser() {
+		// inserisco il nuovo user
+		$query = "INSERT INTO user_table SET
+				  first_name=:first_name, surname=:surname, password=:password, role=:role, email=:email, date_of_birth=:date_of_birth, logged=:logged;";
+		// preparo la query
+		$stmt = $this->conn->prepare($query);
+
+		// invio i valori per i parametri (NB i valori del nuovo prodotto sono nelle variabili d'istanza!!)
+		$stmt->bindParam(":first_name", $this->first_name);
+		$stmt->bindParam(":surname", $this->surname);
+		$stmt->bindParam(":password", $this->password);
+		$stmt->bindParam(":role", $this->role);
+		$stmt->bindParam(":email", $this->email);
+		$stmt->bindParam(":date_of_birth", $this->date_of_birth);
+		$stmt->bindParam(":logged", false);
+ 
+		// eseguo la query
+		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
+
+		return $stmt;		
+	}
+
 	
 }
 ?>

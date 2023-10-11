@@ -19,25 +19,27 @@ $database = new Database();
 $db = $database->getConnection();
  
 // creo un'istanza di Prodotto
-$product = new Product($db);
+$user = new Product($db);
 
 // leggo i dati nel body della request (metodo POST)
 $data = json_decode(file_get_contents("php://input"));
  
 // controllo che i dati ci siano...
 if(
-    !empty($data->name) &&
-    !empty($data->price) &&
-    !empty($data->description) &&
-    !empty($data->cat_id)
+    !empty($data->first_name) &&
+    !empty($data->surname) &&
+    !empty($data->password) &&
+    !empty($data->email) &&
+    !empty($data->date_of_birth)
 ) {
  
     // inserisco i valori nelle variabili d'istanza dell'oggetto $product
-    $product->setName($data->name);
-    $product->setPrice($data->price);
-    $product->setDescription($data->description);
-    $product->setCategory_id($data->cat_id);
- 
+    $user->setFirstName($data->first_name);
+    $user->setSurname($data->surname);
+    $user->setPassword($data->password);
+    $user->setEmail($data->email);
+    $user->setDateOfBirth($data->date_of_birth);
+    
 	// invoco il metodo create() che crea un nuovo prodotto
     if($product->create()){ // se va a buon fine...
         http_response_code(201); // response code 201 = created

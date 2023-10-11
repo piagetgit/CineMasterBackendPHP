@@ -24,11 +24,16 @@ $user = new User($db);
 // leggo i dati nel body della request (metodo POST)
 $data = json_decode(file_get_contents("php://input"));
 
+
 if(!empty($data->email) && !empty($data->password)){
-    $user->readUserByEmail($email)
+    $user->setEmail($data->email);
+    $user->readUserByEmail();
     if (!empty($user->password) && (strcmp($data->password,$user->password)==0)){
         http_response_code(200);
         echo "login success";
+    }else{
+        http_response_code(400);
+    echo "some fill are null or empty";
     }
 }else{
     http_response_code(400);
