@@ -8,10 +8,8 @@ class User {
     public $id;
     public $first_name;
     public $surname;
-
     public $password;
     public $is_logged;
-
     public $email;
     public $date_of_birth;
     public $role;
@@ -42,12 +40,16 @@ class User {
         return $this->first_name;
     }
 
+    public function getPassword(){
+        return $this->password;
+    }
+
     public function setFirstName($first_name_par){
-        $this->name = $first_name_par;
+        $this->first_name = $first_name_par;
     }
 
     public function setSurname($surname_par){
-        $this->name = $surname_par;
+        $this->surname = $surname_par;
     }
 
     public function getDescription(){
@@ -59,6 +61,18 @@ class User {
     
     public function setEmail($email_par){
         $this->email = $email_par;
+    }
+
+    public function setPassword($password_par){
+        $this->password = $password_par;
+    }
+
+    public function setIsLogger($is_logged_par){
+        $this->is_logged = $is_logged_par;
+    }
+
+    public function setRole($role_par){
+        $this->role_par = $role_par;
     }
 
     public function setDateOfBirth($date_of_birth_parm){
@@ -106,15 +120,14 @@ class User {
 				  first_name=:first_name, surname=:surname, password=:password, role=:role, email=:email, date_of_birth=:date_of_birth, is_logged=:logged;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query);
-
 		// invio i valori per i parametri (NB i valori del nuovo prodotto sono nelle variabili d'istanza!!)
 		$stmt->bindParam(":first_name", $this->first_name);
 		$stmt->bindParam(":surname", $this->surname);
-		$stmt->bindParam(":password", $this->password);
+		$stmt->bindParam(":password", $password);
 		$stmt->bindParam(":role", $this->role);
 		$stmt->bindParam(":email", $this->email);
 		$stmt->bindParam(":date_of_birth", $this->date_of_birth);
-		$stmt->bindParam(":logged", false);
+		$stmt->bindParam(":logged", $this->is_logged);
  
 		// eseguo la query
 		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
