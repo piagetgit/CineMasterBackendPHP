@@ -75,45 +75,42 @@ class Ticket {
         $this->posti = $place_par;
     }
 
-    function writeOne() {
-		// estraggo il biglietto con l'id indicato
-		$query = "SELECT * FROM tickets WHERE Ticket.id = ?;";
-		// preparo la query
-		$stmt = $this->conn->prepare($query);
-		// invio il valore per il parametro
-		$stmt->bindParam(1, $this->id);
-		// eseguo la query
-		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset con un solo elemento)
+    function createTicket() {
+    		// inserisco il nuovo biglietto
+    		$query = "INSERT INTO tickets SET
+    				  id=:id, filmId=:filmId, pagato=:pagato, userId=:userId, numeroPersone=:numeroPersone, numeroRidotti=:numeroRidotti, prezzoTotale=:prezzoTotale, dataOra=:dataOra, posti=:posti;";
+    		// preparo la query
+    		$stmt = $this->conn->prepare($query);
 
-		// leggo la prima (e unica) riga del risultato della query
-		$row = $stmt->fetch(PDO::FETCH_ASSOC); // la funzione fetch (libreria PDO) con parametro PDO::FETCH_ASSOC invocata su un PDOStatement, restituisce un record ($row), in particolare un array le cui chiavi sono i nomi delle colonne della tabella
+    		// invio i valori per i parametri (NB i valori del nuovo biglietto sono nelle variabili d'istanza!!)
+    		$stmt->bindParam(":id", $this->id);
+    		$stmt->bindParam(":filmId", $this->filmId);
+    		$stmt->bindParam(":pagato", $this->pagato);
+    		$stmt->bindParam(":userId", $this->userId);
+    		$stmt->bindParam(":numeroPersone", $this->numeroPersone);
+    		$stmt->bindParam(":numeroRidotti", $this->numeroRidotti);
+    		$stmt->bindParam(":prezzoTotale", $this->prezzoTotale);
+    		$stmt->bindParam(":dataOra", $this->dataOra);
+    		$stmt->bindParam(":posti", $this->posti);
 
-		if ($row) {
-			// inserisco i valori nelle variabili d'istanza
-			$this->id = $row['id'];
-			$this->filmId = $row['filmId'];
-			$this->pagato = $row['pagato'];
-			$this->userId = $row['userId'];
-			$this->numeroPersone = $row['numeroPersone'];
-			$this->numeroRidotti = $row['numeroRidotti'];
-			$this->prezzoTotale = $row['prezzoTotale'];
-			$this->dataOra = $row['dataOra'];
-			$this->posti = $row['posti'];
+    		// eseguo la query
+    		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
 
-		}
-		else {
-			// se non trovo il biglietto, imposto i valori delle variabili d'istanza a null
-			$this->id = null;
-			$this->filmId = null;
-			$this->pagato = null;
-			$this->userId = null;
-			$this->numeroPersone = null;
-			$this->numeroRidotti = null;
-			$this->prezzoTotale = null;
-			$this->dataOra = null;
-            $this->posti = null;
+    		return $stmt;
+    }
 
-		// la funzione readOne non restituisce un risultato, bensì modifica l'oggetto su cui viene invocata (cioè il prodotto)
-	}
+    function readTicketsByUser() {
+    		// estraggo tutti i biglietti
+    		$query = "SELECT * FROM tickets ORDER BY id;";
+    		// preparo la query
+    		$stmt = $this->conn->prepare($query);
+    		// eseguo la query
+    		$tickets = [$stmt->execute()]; // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
+
+    		foreach ($tickets => $val){
+    		    if ()
+    		    }
+    		return $stmt;
+    	}
 }
 ?>
