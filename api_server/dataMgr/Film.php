@@ -24,25 +24,25 @@ class Film {
         return $this->id;
     }
     public function setTitle($title_par) {
-        $this->id = $title_par;
+        $this->title = $title_par;
     }
 	public function setPrice($price_par) {
-        $this->id = $price_par;
+        $this->price = $price_par;
     }
 	public function setCategory($category_par) {
-        $this->id = $category_par;
+        $this->category = $category_par;
     }
 	public function setPublishDate($publish_date_par) {
-        $this->id = $publish_date_par;
+        $this->publish_date = $publish_date_par;
     }
 	public function setRegista($regista_par) {
-        $this->id = $regista_par;
+        $this->regista = $regista_par;
     }
 	public function setDuration($duration_par) {
-        $this->id = $duration_par;
+        $this->duration = $duration_par;
     }
 	public function setImg($img_par) {
-        $this->id = $img_par;
+        $this->img = $img_par;
     }
 
     public function getTitle() {
