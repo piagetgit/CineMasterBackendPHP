@@ -68,7 +68,7 @@ class User {
 	
 	function read() {
 		// estraggo tutti film 
-		$query = "SELECT * FROM user ORDER BY firstname;";
+		$query = "SELECT * FROM user_table ORDER BY firstname;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
 		// eseguo la query
@@ -78,8 +78,8 @@ class User {
 	}
 
     function readUserByEmail() {
-		$query = "SELECT * FROM users
-                  WHERE users.email=:email;";
+		$query = "SELECT * FROM user_table
+                  WHERE user_table.email=:email;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
         $stmt->bindParam(":email", $this->email);

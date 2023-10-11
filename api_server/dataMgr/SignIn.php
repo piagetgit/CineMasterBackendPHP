@@ -22,18 +22,6 @@ class SignIn {
         return $this->password;
     }
 	
-	function signin() {
-		// estraggo tutti film 
-		$query = "SELECT * FROM users
-                  WHERE users.email = :email;";
-		// preparo la query
-		$stmt = $this->conn->prepare($query); 
-        $stmt->bindParam(":email", $this->email);
-		// eseguo la query
-		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
-
-		return $stmt; 
-	}
 	
 }
 ?>
