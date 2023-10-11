@@ -1,5 +1,5 @@
 <?php
-class Category {
+class Ticket {
 
 	//connessione (inizializzata nel costruttore)
     private $conn;
