@@ -4,7 +4,7 @@ class Film {
 	//connessione (inizializzata nel costruttore)
     private $conn;
  
-    // proprietà dei prodotti
+    // proprietà dei film
     public $id;
     public $description;
     public $price;
@@ -126,18 +126,17 @@ class Film {
 	function create() {
 		// inserisco il nuovo film
 		$query = "INSERT INTO films SET
-				  tilte=:title, prezzo=:price, descrizione=:description, category=:category, publish_date=:publish_date, regista=:regista, duration=:duration, img=:img;";
+				  title=:title, price=:price, description=:description, category=:category, publish_date=:publish_date, regista=:regista, duration=:duration, img=:img;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query);
 
 		// invio i valori per i parametri (NB i valori del nuovo prodotto sono nelle variabili d'istanza!!)
-		$stmt->bindParam(":title", $this->name);
+		$stmt->bindParam(":title", $this->title);
 		$stmt->bindParam(":price", $this->price);
 		$stmt->bindParam(":description", $this->description);
 		$stmt->bindParam(":category", $this->category);
 		$stmt->bindParam(":publish_date", $this->publish_date);
 		$stmt->bindParam(":regista", $this->regista);
-		$stmt->bindParam(":duration", $this->duration);
 		$stmt->bindParam(":duration", $this->duration);
 		$stmt->bindParam(":img", $this->img);
  
@@ -150,10 +149,10 @@ class Film {
 	// servizio di aggiornamento dei dati di un film
 	function update() {
 		// aggiorno i dati del film con l'id indicato
-		$query = "UPDATE prodotti SET
+		$query = "UPDATE films SET
 					title = :n,
-					prezzo = :p,
-					descrizione = :d,
+					price = :p,
+					description = :d,
 					category = :c_id,
 					publish_date = :n,
 					regista = :r,
@@ -203,8 +202,8 @@ class Film {
 	function search($keywords) {
 		// cerco i prodotti 
 		$query = "SELECT * FROM films
-				  WHERE films.title LIKE ? OR films.descrizione LIKE ? OR films.category LIKE ?
-				  ORDER BY films.nome;";
+				  WHERE films.title LIKE ? OR films.description LIKE ? OR films.category LIKE ?
+				  ORDER BY films.title;";
 		
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 

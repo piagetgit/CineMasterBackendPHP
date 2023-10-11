@@ -12,14 +12,14 @@ header("Content-Type: application/json; charset=UTF-8");
  
 // includo le classi per la gestione dei dati
 include_once '../dataMgr/Database.php';
-//include_once '../dataMgr/Film.php';
+include_once '../dataMgr/Film.php';
 
 // creo una connessione al DBMS
 $database = new Database();
 $db = $database->getConnection();
  
 // creo un'istanza di Prodotto
-//$film = new Film($db);
+$film = new Film($db);
 
 // leggo i dati nel body della request (metodo POST)
 $data = json_decode(file_get_contents("php://input"));
