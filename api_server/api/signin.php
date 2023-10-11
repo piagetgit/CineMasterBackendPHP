@@ -30,7 +30,8 @@ if(!empty($data->email) && !empty($data->password)){
     $user->readUserByEmail();
     if (!empty($user->password) && (strcmp($data->password,$user->password)==0)){
         http_response_code(200);
-        echo "login success";
+        $arr = array('message' => 'login success');
+        echo json_encode($arr);
     }else{
         http_response_code(400);
     echo "some fill are null or empty";

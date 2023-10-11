@@ -89,7 +89,7 @@ class User {
  
 		if ($row) {
 			// inserisco i valori nelle variabili d'istanza 
-			$this->name = $row['name'];
+			$this->first_name = $row['first_name'];
 			$this->surname = $row['surname'];
 			$this->password = $row['password'];
 		}
@@ -103,7 +103,7 @@ class User {
     function createUser() {
 		// inserisco il nuovo user
 		$query = "INSERT INTO user_table SET
-				  first_name=:first_name, surname=:surname, password=:password, role=:role, email=:email, date_of_birth=:date_of_birth, logged=:logged;";
+				  first_name=:first_name, surname=:surname, password=:password, role=:role, email=:email, date_of_birth=:date_of_birth, is_logged=:logged;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query);
 
