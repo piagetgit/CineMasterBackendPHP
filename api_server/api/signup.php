@@ -33,34 +33,39 @@ if(
     !empty($data->date_of_birth)
 ) {
  
-    // inserisco i valori nelle variabili d'istanza dell'oggetto $product
-    $user->setFirstName($data->first_name);
-    $user->setSurname($data->surname);
-    //$user->setPassword($data->password);
-    $user->setPassword("password");
-    $user->setEmail($data->email);
-    $user->setDateOfBirth($data->date_of_birth);
-    $user->setRole("utente");
-    
-	// invoco il metodo create() che crea un nuovo prodotto
-    if($user->createUser()){ // se va a buon fine...
-        http_response_code(201); // response code 201 = created
- 
-        // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-        echo json_encode(array("message" => "Product was created"));
+        // inserisco i valori nelle variabili d'istanza dell'oggetto $product
+        $user->setFirstName($data->first_name);
+        $user->setSurname($data->surname);
+        $user->setPassword($data->password);
+        //$user->setPassword("password");
+        $user->setEmail($data->email);
+        $user->setDateOfBirth($data->date_of_birth);
+        $user->setRole("utente");
+        
+        if (!$user->existUserByEmail()){
+            http_response_code(403);
+            // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
+            echo json_encode(array("message" => "User Already exits with the email". $data->email));
+            return;
+        }
+        else if($user->createUser()){ // se va a buon fine...
+                http_response_code(201); // response code 201 = created
+        
+                // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
+                echo json_encode(array("message" => "User has been created"));
+        }
+        else{ // se la creazione è fallita...
+            http_response_code(503); // response code 503 = service unavailable
+        
+            // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
+                echo json_encode(array("message" => "Unable to create product"));
+        }
     }
-    else{ // se la creazione è fallita...
-        http_response_code(503); // response code 503 = service unavailable
- 
+    else { // se i dati sono incompleti
+        http_response_code(400); // response code 400 = bad request
         // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-        echo json_encode(array("message" => "Unable to create product"));
-    }
-}
-else { // se i dati sono incompleti
-    http_response_code(400); // response code 400 = bad request
-	// creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-    // uso l’operatore ternario con empty() per evitare l’errore sulla stampa di un valore inesistente
-    echo json_encode(array("message" => "Unable to create product. Data is incomplete:"
-		. " firstname=" . (empty($data->first_name) ? "null" : $data->first_name) . " surname=" . (empty($data->surname) ? "null" : $data->surname) . " password=" . (empty($data->password) ? "null" : "*****") . " email=" . (empty($data->email) ? "null" : $data->email) . " date_of_birth=" . (empty($data->date_of_birth) ? "null" : $data->date_of_birth)));
+        // uso l’operatore ternario con empty() per evitare l’errore sulla stampa di un valore inesistente
+        echo json_encode(array("message" => "Unable to create product. Data is incomplete:"
+            . " firstname=" . (empty($data->first_name) ? "null" : $data->first_name) . " surname=" . (empty($data->surname) ? "null" : $data->surname) . " password=" . (empty($data->password) ? "null" : "*****") . " email=" . (empty($data->email) ? "null" : $data->email) . " date_of_birth=" . (empty($data->date_of_birth) ? "null" : $data->date_of_birth)));
 }
 ?>
