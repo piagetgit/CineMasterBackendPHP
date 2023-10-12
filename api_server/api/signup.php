@@ -42,7 +42,7 @@ if(
         $user->setDateOfBirth($data->date_of_birth);
         $user->setRole("utente");
         
-        if (!$user->existUserByEmail()){
+        if ($user->existUserByEmail()){
             http_response_code(403);
             // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
             echo json_encode(array("message" => "User Already exits with the email". $data->email));
