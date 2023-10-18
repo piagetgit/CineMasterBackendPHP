@@ -1,14 +1,11 @@
 <?php
-// rendo accessibile questo endpoint a tutti (CORS)
-header("Access-Control-Allow-Origin: *");
-// definisco il metodo consentito per la request (CORS)
-header("Access-Control-Allow-Methods: DELETE");
-// definisco la validità massima dell'autorizzazione in secondi (CORS)
-header("Access-Control-Max-Age: 3600");
-// definisco i tipi di header consentiti (CORS)
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-// specifico il formato della risposta (JSON)
-header("Content-Type: application/json; charset=UTF-8");
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With');
+header('Access-Control-Allow-Headers: Accept, Content-Type');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Content-Type: application/json');
+header('Accept: application/json');
  
 // includo le classi per la gestione dei dati
 include_once '../dataMgr/Database.php';
@@ -27,18 +24,23 @@ $data = json_decode(file_get_contents("php://input"));
 
 if(!empty($data->email) && !empty($data->password)){
     $user->setEmail($data->email);
-    $user->readUserByEmail();
-    if (!empty($user->password) && (strcmp($data->password,$user->password)==0)){
-        http_response_code(200);
-        $arr = array('message' => 'login success');
-        echo json_encode($arr);
-    }else{
-        http_response_code(400);
-    echo "some fill are null or empty";
+    if($user->readUserByEmail()){
+        if (!empty($user->password) && (strcmp($data->password,$user->password)==0)){
+            http_response_code(200);
+            $arr = array('message' => 'login success');
+            $res = array('nome'=>$user->first_name,'cognome'=> $user->surname,'id' => $user->id,'dataNascita' => $user->date_of_birth, 'email' => $user->email);
+            echo json_encode($res);
+        }else{
+            http_response_code(400);
+            /*$arr = array('message' => 'Email or Password incorrect');
+            echo json_encode($arr);*/
+        }
     }
+    
 }else{
     http_response_code(400);
-    echo "some fill are null or empty";
+    /*$arr = array('message' => 'some fill are null or empty');
+    echo json_encode($arr);*/
 }
 
 ?>
