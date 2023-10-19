@@ -1,5 +1,5 @@
 <?php
-// rendo accessibile questo endpoint a tutti (CORS)
+/*// rendo accessibile questo endpoint a tutti (CORS)
 header("Access-Control-Allow-Origin: *");
 // definisco il metodo consentito per la request (CORS)
 header("Access-Control-Allow-Methods: DELETE");
@@ -8,8 +8,13 @@ header("Access-Control-Max-Age: 3600");
 // definisco i tipi di header consentiti (CORS)
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 // specifico il formato della risposta (JSON)
-header("Content-Type: application/json; charset=UTF-8");
- 
+header("Content-Type: application/json; charset=UTF-8");*/
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With');
+header('Access-Control-Allow-Headers: Accept, Content-Type');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Content-Type: application/json');
+header('Accept: application/json');
 // includo le classi per la gestione dei dati
 include_once '../dataMgr/Database.php';
 include_once '../dataMgr/Film.php';
@@ -25,20 +30,31 @@ $film = new Film($db);
 $data = json_decode(file_get_contents("php://input"));
 
 
-if(!empty($data->email) && !empty($data->password)){
-    $user->setEmail($data->email);
-    $user->readUserByEmail();
-    if (!empty($user->password) && (strcmp($data->password,$user->password)==0)){
+if(!empty($data->id_film)){
+
+/*$film->setId($data->id_film);*/
+if($film->find_film($data->id_film)){
+    
         http_response_code(200);
-        $arr = array('message' => 'login success');
-        echo json_encode($arr);
-    }else{
-        http_response_code(400);
-    echo "some2222 fill are null or empty";
-    }
-}else{
-    http_response_code(400);
-    echo "some3333 fill are null or empty";
+        $res = array('id'=>$film->id, 'description'=>$film->description, 'price'=>$film->price, 'category'=>$film->category, 'publish_date'=>$film->publish_date, 'regista'=>$film->regista, 'duration'=>$film->duration, 'title'=>$film->title, 'img'=>$film->img);
+        echo json_encode($res);
+    
 }
+}else{
+
+    if($res=$film->lista()){
+    
+        http_response_code(200);
+        
+        echo json_encode($res);
+    
+    }else{
+
+        http_response_code(400); 
+    }
+    
+}
+
+
 
 ?>
