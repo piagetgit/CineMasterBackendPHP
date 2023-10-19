@@ -106,6 +106,9 @@ class User {
 			$this->first_name = $row['first_name'];
 			$this->surname = $row['surname'];
 			$this->password = $row['password'];
+            $this->id = $row['id'];
+            $this->date_of_birth = $row ['date_of_birth'];
+            return true;
 		}
         else{
             $arr = array('message' => 'User ' .$this->email. ' not found');

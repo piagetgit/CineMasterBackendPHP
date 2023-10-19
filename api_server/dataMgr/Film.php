@@ -15,9 +15,12 @@ class Film {
     public $title;
 	public $img;
 	
-    // il construttore inizializza la variabile per la connessione al DB
+    // il costruttore inizializza la variabile per la connessione al DB
     public function __construct($db) {
         $this->conn = $db;
+    }
+	public function setId($id_par) {
+        $this->id = $id_par;
     }
 
     public function getId() {
@@ -70,10 +73,56 @@ class Film {
         return $this->img;
     }
 
+
+	function find_film($id_film) {
+		
+		$query = "SELECT * FROM films
+				WHERE films.id=:film_id;";
+
+		// preparo la query
+		$stmt = $this->conn->prepare($query); 
+		$stmt->bindParam(":film_id", $id_film);
+
+		// eseguo la query
+		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
+		$row = $stmt->fetch(PDO::FETCH_ASSOC); // la funzione fetch (libreria PDO) con parametro PDO::FETCH_ASSOC invocata su un PDOStatement, restituisce un record ($row), in particolare un array le cui chiavi sono i nomi delle colonne della tabella 
+
+		if ($row) {
+		// inserisco i valori nelle variabili d'istanza 
+		$this->id = $row['id'];
+		$this->description = $row['description'];
+		$this->price = $row['price'];
+		$this->category = $row['category'];
+		$this->publish_date = $row['publish_date'];
+		$this->regista = $row['regista'];
+		$this->duration = $row['duration'];
+		$this->title = $row['title'];
+		$this->img = $row['img'];
+
+		return true;
+		}
+
+	}
+
+	function lista() {
+		
+		$query = "SELECT * FROM films";
+		// preparo la query
+		$stmt = $this->conn->prepare($query); 
+		//$stmt->bindParam(":film_id", $abc);
+		// eseguo la query
+		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		return $rows;
+	}
+
+
+
 	// servizio di lettura di tutti i film
 	function read() {
 		// estraggo tutti i film
-		$query = "SELECT * FROM films ORDER BY title;";
+		$query = "SELECT * FROM films";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
 		// eseguo la query
