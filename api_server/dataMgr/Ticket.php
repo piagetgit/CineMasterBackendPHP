@@ -78,7 +78,7 @@ class Ticket {
     function createTicket() {
     		// inserisco il nuovo biglietto
     		$query = "INSERT INTO tickets SET
-    				  id=:id, filmId=:filmId, pagato=:pagato, userId=:userId, numeroPersone=:numeroPersone, numeroRidotti=:numeroRidotti, prezzoTotale=:prezzoTotale, dataOra=:dataOra, posti=:posti;";
+    				  id=:id, filmId=:filmId, pagato=:pagato, userId=:userId, numeroPersone=:numeroPersone, numeroRidotti=:numeroRidotti, prezzoTotale=:prezzoTotale, dataOra=:dataOra, posti=:posti";
     		// preparo la query
     		$stmt = $this->conn->prepare($query);
 
@@ -95,21 +95,18 @@ class Ticket {
 
     		// eseguo la query
     		$stmt->execute(); // NB $stmt conterrà il risultato dell'esecuzione della query
-
     		return $stmt;
     }
 
     function readTicketsByUser() {
     		// estraggo tutti i biglietti
-    		$query = "SELECT * FROM tickets ORDER BY id;";
+    		$query = "SELECT * FROM tickets ORDER BY id WHERE tickets.userId = ?;";
     		// preparo la query
     		$stmt = $this->conn->prepare($query);
+    		// invio il parametro dell'utente
+    		$stmt->bindParam(1, $this->userId);
     		// eseguo la query
-    		$tickets = [$stmt->execute()]; // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
-
-    		foreach ($tickets => $val){
-    		    if ()
-    		    }
+    		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
     		return $stmt;
     	}
 }
