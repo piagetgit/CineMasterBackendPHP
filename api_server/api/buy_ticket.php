@@ -3,46 +3,61 @@
   header("Access-Control-Allow-Origin: *");
   // dichiaro il formato della risposta (json)
   header("Content-Type: application/json; charset=UTF-8");
+  // definisco i tipi di header consentiti (CORS)
+  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
   // dichiaro il metodo consentito per la request
-  header("Access-Control-Allow-Methods: GET");
-
+  header("Access-Control-Allow-Methods: POST");
 
   // includo le classi per la gestione dei dati
   include_once '../dataMgr/Database.php';
-  include_once '../dataMgr/Product.php';
+  include_once '../dataMgr/Ticket.php';
 
   // creo una connessione al DBMS
   $database = new Database();
   $db = $database->getConnection();
 
-  // creo un'istanza di Prodotto
-  $product = new Product($db);
+  // creo un'istanza di biglietto
+  $ticket = new Ticket($db);
 
-  // leggo l'id nella richiesta (GET) e lo inserisco nella variabile di istanza id dell'oggetto $product
-  // N.B. forma compatta di if: se $_GET['id'] è settata, la leggo, altrimenti invoco la funzione die() che "uccide" lo script
-  $id_toRead = isset($_GET['id']) ? $_GET['id'] : die();
-  $product->setId($id_toRead);
+  // leggo i dati nel body della request (metodo POST)
+  $data = json_decode(file_get_contents("php://input"));
 
-  // invoco il metodo readOne() che restituisce le info del prodotto su cui viene invocato (l'id è già nella variabile id di $product!)
-  // N.B. la funzione readOne(), in realtà, non restituisce un risultato, bensì modifica l'oggetto su cui viene invocata (cioè il prodotto), a cui chiedo i dati...
-  $product->readOne();
-
-  if($product->name!=null) { // se il prodotto esiste (il nome  non è nullo)...
-      // costruisco un array associativo ($product_item) che rappresenta il prodotto...
-      $product_item = array(
-          "id" => $product->getId(),
-          "name" => $product->getName(),
-          "description" => $product->getDescription(),
-          "price" => $product->getPrice(),
-          "category_id" => $product->getCategory_id(),
-          "category_name" => $product->getCategory_name()
-      );
-      http_response_code(200); // response code 200 = tutto ok
-      echo json_encode($product_item); // ... e lo restituisco nella response, dopo averlo trasformato in oggetto JSON
-  }
-  else { // se il nome del prodotto NON esiste
-      http_response_code(404); // response code 404 = Not found
-      // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-      echo json_encode(array("message" => "Product does not exist"));
+  // controllo che i dati ci siano...
+  if(!empty($data->id) && !empty($data->filmId) && !empty($data->pagato) && !empty($data->userId) && !empty($data->numeroPersone) && !empty($data->numeroRidotti) && !empty($data->prezzoTotale) && !empty($data->dataOra) && !empty($data->posti)) {
+      // inserisco i valori nelle variabili di istanza dell'oggetto $ticket
+      $ticket->setId($data->id);
+      $ticket->setFilmId($data->filmId);
+      $ticket->setPagato($data->pagato);
+      $ticket->setUserId($data->userId);
+      $ticket->setNumPersone($data->numeroPersone);
+      $ticket->setNumRidotti($data->numeroRidotti);
+      $ticket->setPrezzoTot($data->prezzoTotale);
+      $ticket->setDataOra($data->dataOra);
+      $ticket->setPlace($data->posti);
+      // invoco il metodo createTicket() che crea un nuovo biglietto
+      if ($ticket->createTicket()) { // se va a buon fine...
+          http_response_code(201); // response code 201 = created
+          // creo un oggetto JSON costituito dalla coppia message: testo-msg
+          echo json_encode(array("message" => "Ticket was created"));
+      }else { // se la creazione è fallita...
+          http_response_code(503); // response code 503 = service unavailable
+          // creo un oggetto JSON costituito dalla coppia message: testo-msg
+          echo json_encode(array("message" => "Unable to create ticket"));
+      }
+  }else { // se i dati sono incompleti
+      http_response_code(400); // response code 400 = bad request
+      // creo un oggetto JSON costituito dalla coppia message: testo-msg
+      // uso l’operatore ternario con empty() per evitare l’errore sulla stampa di un valore inesistente
+      echo json_encode(array("message" => "Unable to create ticket.
+      Data is incomplete:" .
+      " Id=" . (empty($data->Id) ? "null" : $data->Id) .
+      " Film Id=" . (empty($data->filmId) ? "null" : $data->filmId) .
+      " Pagato=" . (empty($data->pagato) ? "null" : $data->pagato) .
+      " User Id=" . (empty($data->userId) ? "null" : $data->userId) .
+      " Numero Persone=" . (empty($data->numeroPersone) ? "null" : $data->numeroPersone) .
+      " Numero Ridotti=" . (empty($data->numeroRidotti) ? "null" : $data->numeroRidotti) .
+      " Totale=" . (empty($data->prezzoTotale) ? "null" : $data->prezzoTotale) .
+      " Data&Ora=" . (empty($data->dataOra) ? "null" : $data->dataOra) .
+      " Posti=" . (empty($data->posti) ? "null" : $data->posti)));
   }
   ?>

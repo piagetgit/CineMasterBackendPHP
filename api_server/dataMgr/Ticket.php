@@ -100,7 +100,7 @@ class Ticket {
 
     function readTicketsByUser() {
     		// estraggo tutti i biglietti
-    		$query = "SELECT * FROM tickets ORDER BY id WHERE tickets.userId = ?;";
+    		$query = "SELECT * FROM tickets WHERE tickets.userId = ? ORDER BY id;";
     		// preparo la query
     		$stmt = $this->conn->prepare($query);
     		// invio il parametro dell'utente
