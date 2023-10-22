@@ -27,9 +27,6 @@ class User {
     public function setId($id_par){
         $this->id = $id_par;
     }
-    public function getName(){
-        return $this->nom;
-    }
 
     public function getEmail(){
        return $this->email;
@@ -39,7 +36,7 @@ class User {
     }
 
     public function getDateOfBrith(){
-        return $this->first_name;
+        return $this->date_of_birth;
     }
 
     public function setFirstName($first_name_par){
