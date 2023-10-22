@@ -25,7 +25,7 @@
   $stmt = $ticket->readTicketsByUser();
   if ($stmt){   // se ci sono dei biglietti sul profilo
     $tickets_list = array();
-    $tickets_list["tickets"] = array();
+    //$tickets_list["tickets"] = array();
     foreach ($stmt as $row) {
         // costruisco un array associativo che rappresenta i singoli biglietti
         $ticket_item = array(
@@ -39,8 +39,8 @@
         "dataOra" => $row['dataOra'],
         "posti" => $row['posti']
         );
-        // ... e lo aggiungo al fondo di lista-di-prodotti
-        array_push($tickets_list["tickets"], $ticket_item);
+        // ... e lo aggiungo al fondo di lista di ticket
+        array_push($tickets_list, $ticket_item);
     }
     http_response_code(200);   // dico che è tutto ok
     echo json_encode($tickets_list);   // trasformo l'array di biglietti in un JSON
@@ -48,5 +48,4 @@
     http_response_code(404);   // dico che quanto richiesto non è stato trovato
     echo json_encode(array("message" => "No tickets available"));   // e lo comunico al client
    }
-  }
   ?>

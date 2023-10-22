@@ -112,8 +112,8 @@ INSERT INTO `user_table` (`id`,`first_name`,`surname`,`password`,`email`,`date_o
 --
 
 INSERT INTO `tickets` (`id`,`filmId`,`userId`,`numeroPersone`,`prezzoTotale`,`dataOra`,`numeroRidotti`,`pagato`,`posti`) VALUES
-(20, 1, 20, 2, 30.0, '2023-04-04 15:00:00-02', 0,'A1,A2','0'),
-(21, 1,20, 1, 30.0, '2023-08-04 19:00:00-02', 0,'G5','1');
+(20, 1, 1, 2, 30.0, '2023-04-04 15:00:00-02', 0,'A1,A2','0'),
+(21, 1,1, 1, 30.0, '2023-08-04 19:00:00-02', 0,'G5','1');
 
 
 --
@@ -128,7 +128,6 @@ ALTER TABLE `user_table`
 --
 ALTER TABLE `films`
   ADD PRIMARY KEY (`id`);
-
 
 --
 -- Indexes for table `films`
@@ -159,7 +158,7 @@ ALTER TABLE `films`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 --
