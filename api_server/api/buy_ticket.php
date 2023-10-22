@@ -3,6 +3,7 @@
   header("Access-Control-Allow-Origin: *");
   // dichiaro il formato della risposta (json)
   header("Content-Type: application/json; charset=UTF-8");
+  header('Accept: application/json');
   // definisco i tipi di header consentiti (CORS)
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
   // dichiaro il metodo consentito per la request

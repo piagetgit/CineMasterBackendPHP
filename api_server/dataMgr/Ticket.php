@@ -78,12 +78,11 @@ class Ticket {
     function createTicket() {
     		// inserisco il nuovo biglietto
     		$query = "INSERT INTO tickets SET
-    				  id=:id, filmId=:filmId, pagato=:pagato, userId=:userId, numeroPersone=:numeroPersone, numeroRidotti=:numeroRidotti, prezzoTotale=:prezzoTotale, dataOra=:dataOra, posti=:posti";
+    				  filmId=:filmId, pagato=:pagato, userId=:userId, numeroPersone=:numeroPersone, numeroRidotti=:numeroRidotti, prezzoTotale=:prezzoTotale, dataOra=:dataOra, posti=:posti";
     		// preparo la query
     		$stmt = $this->conn->prepare($query);
 
     		// invio i valori per i parametri (NB i valori del nuovo biglietto sono nelle variabili d'istanza!!)
-    		$stmt->bindParam(":id", $this->id);
     		$stmt->bindParam(":filmId", $this->filmId);
     		$stmt->bindParam(":pagato", $this->pagato);
     		$stmt->bindParam(":userId", $this->userId);
