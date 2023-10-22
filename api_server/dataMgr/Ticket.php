@@ -4,7 +4,7 @@ class Ticket {
 	//connessione (inizializzata nel costruttore)
     private $conn;
 
-    // proprietà dei prodotti
+    // proprietà dei tickets
     private $id;
     private $filmId;
     private $pagato;
@@ -100,11 +100,11 @@ class Ticket {
 
     function readTicketsByUser() {
     		// estraggo tutti i biglietti
-    		$query = "SELECT * FROM tickets WHERE tickets.userId = ? ORDER BY id;";
+    		$query = "SELECT * FROM tickets WHERE tickets.userId =:idUser ORDER BY id;";
     		// preparo la query
     		$stmt = $this->conn->prepare($query);
     		// invio il parametro dell'utente
-    		$stmt->bindParam(1, $this->userId);
+    		$stmt->bindParam(":idUser", $this->userId);
     		// eseguo la query
     		$stmt->execute(); // N.B. $stmt conterrà il risultato dell'esecuzione della query (in questo caso un recordset)
     		return $stmt;
