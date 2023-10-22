@@ -32,15 +32,15 @@ if(!empty($data->email) && !empty($data->password)){
             echo json_encode($res);
         }else{
             http_response_code(400);
-            /*$arr = array('message' => 'Email or Password incorrect');
-            echo json_encode($arr);*/
+            $arr = array('message' => 'Email or Password incorrect');
+            echo json_encode($arr);
         }
     }
     
 }else{
     http_response_code(400);
-    /*$arr = array('message' => 'some fill are null or empty');
-    echo json_encode($arr);*/
+    $arr = array('message' => 'some fill are null or empty');
+    echo json_encode($arr);
 }
 
 ?>

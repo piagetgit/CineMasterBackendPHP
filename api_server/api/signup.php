@@ -45,7 +45,7 @@ if(
         if ($user->existUserByEmail()){
             http_response_code(403);
             // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-            echo json_encode(array("message" => "User Already exits with the email". $data->email));
+            echo json_encode(array("message" => "Email Already exits"));
             return;
         }
         else if($user->createUser()){ // se va a buon fine...
@@ -58,7 +58,7 @@ if(
             http_response_code(503); // response code 503 = service unavailable
         
             // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
-                echo json_encode(array("message" => "Unable to create product"));
+            echo json_encode(array("message" => "Unable to create User"));
         }
     }
     else { // se i dati sono incompleti
