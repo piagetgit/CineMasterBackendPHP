@@ -24,9 +24,8 @@
   $data = json_decode(file_get_contents("php://input"));
 
   // controllo che i dati ci siano...
-  if(!empty($data->id) && !empty($data->filmId) && !empty($data->pagato) && !empty($data->userId) && !empty($data->numeroPersone) && !empty($data->numeroRidotti) && !empty($data->prezzoTotale) && !empty($data->dataOra) && !empty($data->posti)) {
+  if(!empty($data->filmId) && !empty($data->pagato) && !empty($data->userId) && !empty($data->numeroPersone) && !empty($data->numeroRidotti) && !empty($data->prezzoTotale) && !empty($data->dataOra) && !empty($data->posti)) {
       // inserisco i valori nelle variabili di istanza dell'oggetto $ticket
-      $ticket->setId($data->id);
       $ticket->setFilmId($data->filmId);
       $ticket->setPagato($data->pagato);
       $ticket->setUserId($data->userId);
@@ -51,7 +50,6 @@
       // uso l’operatore ternario con empty() per evitare l’errore sulla stampa di un valore inesistente
       echo json_encode(array("message" => "Unable to create ticket.
       Data is incomplete:" .
-      " Id=" . (empty($data->Id) ? "null" : $data->Id) .
       " Film Id=" . (empty($data->filmId) ? "null" : $data->filmId) .
       " Pagato=" . (empty($data->pagato) ? "null" : $data->pagato) .
       " User Id=" . (empty($data->userId) ? "null" : $data->userId) .
