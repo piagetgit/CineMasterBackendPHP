@@ -23,7 +23,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 
 if(!empty($data->email) && !empty($data->password)){
-    $user->setEmail($data->email);
+    $user->setEmail(htmlspecialchars($data->email));
     if($user->readUserByEmail()){
         if (!empty($user->password) && password_verify($data->password,$user->password)){
             http_response_code(200);

@@ -34,10 +34,10 @@ if(
 ) {
  
         // inserisco i valori nelle variabili d'istanza dell'oggetto $product
-        $user->setFirstName($data->first_name);
-        $user->setSurname($data->surname);
+        $user->setFirstName(htmlspecialchars($data->first_name));
+        $user->setSurname(htmlspecialchars($data->surname));
         $user->setPassword(password_hash($data->password, PASSWORD_DEFAULT));
-        $user->setEmail($data->email);
+        $user->setEmail(htmlspecialchars($data->email));
         $user->setDateOfBirth($data->date_of_birth);
         $user->setRole("utente");
        
