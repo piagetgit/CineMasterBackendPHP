@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 
 CREATE DATABASE if not exists cinemaster;
-
+use cinemaster;
 
 -- --------------------------------------------------------
 
@@ -99,11 +99,11 @@ INSERT INTO `films` (`id`,`title`,`publish_date`,`regista`,`duration`,`price`,`c
 --
 
 INSERT INTO `user_table` (`id`,`first_name`,`surname`,`password`,`email`,`date_of_birth`,`role`,`is_logged`) VALUES
-(1, 'Alice', 'Corvetto', 'alccrvtt', 'alice.corvetto@cmail.it', '1999-03-03 00:00:00', 'utente','0'),
-(2,'Marco', 'Donati', 'mrcdnt', 'marco.donati@cmail.it', '2001-05-05 00:00:00', 'utente','0'),
-(3,'Giovanni', 'Roselli', 'gvnnrsll', 'giovanni_roselli@cmail.it', '2000-04-04 00:00:00', 'utente','0'),
-(4,'Luca', 'Grazioli', 'cinemaster_77456', 'admin_luca@cinemaster.com', '1970-01-01 00:00:00', 'admin','0'),
-(5,'Sara', 'Flori', 'cinemaster_33245', 'admin_sara@cinemaster.it', '1970-01-01 00:00:00', 'admin','0');
+(1, 'Alice', 'Corvetto', '$2y$10$H5/NPlpYHwxSF.IKKJN5YOWc2PaYBVXn34s1aO.EGnwDgewAo4NS2', 'alice.corvetto@cmail.it', '1999-03-03 00:00:00', 'utente','0'),
+(2,'Marco', 'Donati', '$2y$10$Of/468bmRZqQu82YQJrFUOTzo0sjjvFxsVnE.h6hD6qdCL5.xYeca', 'marco.donati@cmail.it', '2001-05-05 00:00:00', 'utente','0'),
+(3,'Giovanni', 'Roselli', '$2y$10$v52IlLMU2Eh9t5GIofaFNenLYIVPIGP2lOdAb0qVqaPnJ0Hgo4ynW', 'giovanni_roselli@cmail.it', '2000-04-04 00:00:00', 'utente','0'),
+(4,'Luca', 'Grazioli', '$2y$10$MvzMuLFPe7waJk.6OhBfqe/iWDIuyhaVn7FanAwpLEW55try7SMEu', 'admin_luca@cinemaster.com', '1970-01-01 00:00:00', 'admin','0'),
+(5,'Sara', 'Flori', '$2y$10$dcgHNLrdLUvibgbMM/y09.OZOq4jdNUU9kfw5qg7kRFpkKu9kqfWC', 'admin_sara@cinemaster.it', '1970-01-01 00:00:00', 'admin','0');
 
 
 
