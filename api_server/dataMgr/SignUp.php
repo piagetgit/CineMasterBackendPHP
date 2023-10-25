@@ -62,9 +62,15 @@ class User {
         $this->date_of_birth = $date_of_birth_parm;
     }
 
-	
+    public function setPassword($password_par){
+        $this->password =$password_par; /*password_hash($password_par, PASSWORD_DEFAULT));*/
+    }
+
+
+    
+
 	function read() {
-		// estraggo tutti film 
+		// estraggo tutti gli user
 		$query = "SELECT * FROM user ORDER BY firstname;";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 

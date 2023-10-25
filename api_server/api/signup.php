@@ -18,7 +18,7 @@ include_once '../dataMgr/User.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// creo un'istanza di Prodotto
+// creo un'istanza di User
 $user = new User($db);
 
 // leggo i dati nel body della request (metodo POST)
@@ -36,12 +36,12 @@ if(
         // inserisco i valori nelle variabili d'istanza dell'oggetto $product
         $user->setFirstName($data->first_name);
         $user->setSurname($data->surname);
-        $user->setPassword($data->password);
-        //$user->setPassword("password");
+        $user->setPassword(password_hash($data->password, PASSWORD_DEFAULT));
         $user->setEmail($data->email);
         $user->setDateOfBirth($data->date_of_birth);
         $user->setRole("utente");
-        
+       
+
         if ($user->existUserByEmail()){
             http_response_code(403);
             // creo un oggetto JSON costituito dalla coppia message: testo-del-messaggio
