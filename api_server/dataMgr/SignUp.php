@@ -63,7 +63,7 @@ class User {
     }
 
     public function setPassword($password_par){
-        $this->password =$password_par; /*password_hash($password_par, PASSWORD_DEFAULT));*/
+        $this->password =$password_par;
     }
 
 

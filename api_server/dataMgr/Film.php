@@ -105,10 +105,7 @@ class Film {
 	}
 
 	function lista() {
-/*		$foo=2;
-		<script>
-    console.log(<?= json_encode($foo); ?>);
-</script>*/
+
 		$query = "SELECT * FROM films";
 		// preparo la query
 		$stmt = $this->conn->prepare($query); 
